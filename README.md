@@ -14,6 +14,7 @@
 
 Fungsi: addTodo
 
+```
 async addTodo(todo: Omit<Todo, 'id'>) {
     const todoRef = this.getTodoRef(); // Mengambil referensi koleksi 'todos' milik user.
     const docRef = await addDoc(todoRef, {
@@ -24,6 +25,7 @@ async addTodo(todo: Omit<Todo, 'id'>) {
     });
     return docRef.id;             // Mengembalikan ID dokumen yang baru ditambahkan.
 }
+```
 
 Penjelasan:
 
@@ -42,6 +44,7 @@ Detail:
 
 Fungsi: getTodos
 
+```
 async getTodos(): Promise<Todo[]> {
     const todoRef = this.getTodoRef(); // Mengambil referensi koleksi 'todos' milik user.
     const q = query(todoRef, orderBy('updatedAt', 'desc')); // Query untuk mengurutkan berdasarkan 'updatedAt' secara menurun.
@@ -51,8 +54,10 @@ async getTodos(): Promise<Todo[]> {
         ...doc.data()              // Menambahkan data dari dokumen.
     } as Todo));
 }
+```
 
 Tujuan: Mengambil daftar semua dokumen dari koleksi todos.
+
 Detail:
 - Mengambil referensi koleksi untuk pengguna yang sedang login.
 - Membuat query untuk mengurutkan dokumen berdasarkan waktu pembaruan (updatedAt) secara menurun.
@@ -77,8 +82,8 @@ Detail:
 
 Fungsi: updateTodo
 
-typescript
-Salin kode
+
+```
 async updateTodo(id: string, todo: Partial<Todo>) {
     const todoRef = this.getTodoRef(); // Mengambil referensi koleksi 'todos' milik user.
     const docRef = doc(todoRef, id); // Mengambil referensi dokumen berdasarkan ID.
@@ -87,9 +92,12 @@ async updateTodo(id: string, todo: Partial<Todo>) {
         updatedAt: Timestamp.now() // Memperbarui waktu perubahan.
     });
 }
+```
+
 Penjelasan:
 
 Tujuan: Memperbarui dokumen tertentu berdasarkan ID.
+
 Detail:
 - Mengambil referensi dokumen berdasarkan ID yang diberikan.
 - Data yang diterima dalam parameter di-spread untuk mengubah data tertentu tanpa mengganti seluruh dokumen.
@@ -104,16 +112,18 @@ Detail:
 
 Fungsi: deleteTodo
 
-typescript
-Salin kode
+```
 async deleteTodo(id: string) {
     const todoRef = this.getTodoRef(); // Mengambil referensi koleksi 'todos' milik user.
     const docRef = doc(todoRef, id);  // Mengambil referensi dokumen berdasarkan ID.
     await deleteDoc(docRef);          // Menghapus dokumen.
 }
+```
+
 Penjelasan:
 
 Tujuan: Menghapus dokumen tertentu dari koleksi todos.
+
 Detail:
 - Mengambil referensi dokumen berdasarkan ID yang diberikan.
 - Menghapus dokumen menggunakan fungsi deleteDoc.
